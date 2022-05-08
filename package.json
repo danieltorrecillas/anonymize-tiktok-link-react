@@ -18,8 +18,8 @@
   },
   "scripts": {
     "start": "REACT_APP_STAGE=development react-scripts start",
-    "dev-build": "REACT_APP_STAGE=development react-scripts build",
-    "prd-build": "REACT_APP_STAGE=production react-scripts build",
+    "build:development": "REACT_APP_STAGE=development react-scripts build",
+    "build:production": "REACT_APP_STAGE=production react-scripts build",
     "test": "REACT_APP_STAGE=development react-scripts test",
     "eject": "react-scripts eject"
   },
