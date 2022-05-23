@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -e
+
+# Uploads a directory to an S3 bucket and invalidates a Cloudfront distribution.
+# This script expects to be invoked with two arguments.
+#   $1 is expected to be the path of the directory to be uploaded
+#   $2 is expected to be the environment to be operated on (prd|dev)
+
+readonly greenColor='\033[0;32m'
+readonly redColor='\033[0;31m'
+readonly noColor='\033[0m'
+readonly prdS3Uri='s3://YOUR_PRD_URI'
+readonly devS3Uri='s3://YOUR_DEV_URI'
+s3Uri=''
+readonly prdDistributionId='YOUR_PRD_ID'
+readonly devDistributionId='YOUR_DEV_ID'
+distributionId=''
+readonly directory=$1
+
+if [[ $# -ne 2 ]]; then
+  echo -e "${redColor}Expected two arguments.${noColor}"
+  echo -e "${redColor}Something like ${noColor}build dev${redColor} where${noColor}"
+  echo -e "  ${redColor}Argument 1 is a relative path to a directory to upload to S3${noColor}"
+  echo -e "  ${redColor}Argument 2 is 'dev' or 'prd'. This deploys to the defined 'dev' or 'prd' bucket.${noColor}"
+  exit 1
+fi
+
+if [[ $2 = 'prd' ]]; then
+  s3Uri=$prdS3Uri
+  distributionId=$prdDistributionId
+elif [[ $2 = 'dev' ]]; then
+  s3Uri=$devS3Uri
+  distributionId=$devDistributionId
+else
+  echo -e "${redColor}Second argument must be either ${noColor}prd${redColor} or ${noColor}dev"
+  exit 1
+fi
+
+echo -e "${greenColor}Uploading $1 to bucket \"$s3Uri\"...${noColor}"
+aws s3 cp "$directory" "$s3Uri" --recursive
+echo -e "${greenColor}Upload complete.${noColor}"
+echo -e "${greenColor}Creating invalidation for all paths for Cloudfront distribution $distributionId...${noColor}"
+invalidationOutput=$(aws cloudfront create-invalidation --distribution-id "$distributionId" --paths '/*')
+echo -e "$invalidationOutput"
+echo -e "${greenColor}Invalidation created. Waiting for invalidation to complete...${noColor}"
+invalidationId=$(echo -e "$invalidationOutput" | awk '/"Id":/ { print $2 }' | tr -d [:punct:])
+
+isCompleted=false
+until [[ "$isCompleted" = true ]]; do
+  invalidationStatus=$(aws cloudfront get-invalidation --id "$invalidationId" --distribution-id "$distributionId" --query 'Invalidation.Status' --output text)
+  if [[ "$invalidationStatus" = "Completed" ]]; then
+    isCompleted=true
+  else
+    sleep 2
+  fi
+done
+
+echo -e "${greenColor}Invalidation completed.${noColor}"
