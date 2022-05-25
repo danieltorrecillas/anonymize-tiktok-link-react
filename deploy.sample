@@ -26,33 +26,35 @@ if [[ $# -ne 2 ]]; then
 fi
 
 if [[ $2 = 'prd' ]]; then
-  s3Uri=$prdS3Uri
-  distributionId=$prdDistributionId
+  s3Uri="$prdS3Uri"
+  distributionId="$prdDistributionId"
 elif [[ $2 = 'dev' ]]; then
-  s3Uri=$devS3Uri
-  distributionId=$devDistributionId
+  s3Uri="$devS3Uri"
+  distributionId="$devDistributionId"
 else
   echo -e "${redColor}Second argument must be either ${noColor}prd${redColor} or ${noColor}dev"
   exit 1
 fi
 
-echo -e "${greenColor}Uploading $1 to bucket \"$s3Uri\"...${noColor}"
+echo -e "${greenColor}Uploading "$1" to bucket \"$s3Uri\"...${noColor}"
+echo "\$ aws s3 cp "$directory" "$s3Uri" --recursive"
 aws s3 cp "$directory" "$s3Uri" --recursive
 echo -e "${greenColor}Upload complete.${noColor}"
-echo -e "${greenColor}Creating invalidation for all paths for Cloudfront distribution $distributionId...${noColor}"
-invalidationOutput=$(aws cloudfront create-invalidation --distribution-id "$distributionId" --paths '/*')
-echo -e "$invalidationOutput"
-echo -e "${greenColor}Invalidation created. Waiting for invalidation to complete...${noColor}"
-invalidationId=$(echo -e "$invalidationOutput" | awk '/"Id":/ { print $2 }' | tr -d [:punct:])
 
+echo -e "${greenColor}Creating invalidation for all paths for Cloudfront distribution "$distributionId"...${noColor}"
+echo "\$ aws cloudfront create-invalidation --distribution-id "$distributionId" --paths '/*'"
+invalidationOutput=$(aws cloudfront create-invalidation --distribution-id "$distributionId" --paths '/*')
+echo "$invalidationOutput"
+
+echo -e "${greenColor}Invalidation created. Waiting for invalidation to complete...${noColor}"
+invalidationId=$(echo "$invalidationOutput" | awk '/"Id":/ { print $2 }' | tr -d [:punct:])
 isCompleted=false
 until [[ "$isCompleted" = true ]]; do
   invalidationStatus=$(aws cloudfront get-invalidation --id "$invalidationId" --distribution-id "$distributionId" --query 'Invalidation.Status' --output text)
   if [[ "$invalidationStatus" = "Completed" ]]; then
     isCompleted=true
-  else
-    sleep 2
   fi
 done
-
 echo -e "${greenColor}Invalidation completed.${noColor}"
+
+echo -e "${greenColor}Deploy complete.${noColor}"
