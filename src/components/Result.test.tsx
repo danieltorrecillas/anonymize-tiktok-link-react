@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react'
 import Result from './Result'
 import userEvent from '@testing-library/user-event'
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 test('renders search box for label "Anonymized:"', () => {
   render(<Result text=""/>)

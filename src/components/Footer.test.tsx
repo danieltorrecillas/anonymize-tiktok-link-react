@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react'
 import Footer from './Footer'
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 test('renders copyright with current year and author', () => {
   const year = new Date().getFullYear()

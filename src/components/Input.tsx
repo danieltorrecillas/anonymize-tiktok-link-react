@@ -1,5 +1,5 @@
 import {ChangeEventHandler} from 'react'
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 type InputProps = {
   text: string,
@@ -19,8 +19,8 @@ const Input = ({text, onChange}: InputProps) => {
         placeholder={Constants.trackingUrl}
         value={text}
         onChange={onChange}
-        pattern="https://.+.tiktok.com/.+"
-        title="A valid url is https://something.tiktok.com/something"
+        pattern="https://www.tiktok.com/.+"
+        title="A valid url is something like https://www.tiktok.com/t/ZTdtTNRjr/?k=1"
         required
       />
       <button type="submit">

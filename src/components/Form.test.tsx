@@ -1,7 +1,7 @@
 import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Form from './Form'
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 test('submitting form fetches new URL and populates Anonymized textbox', async () => {
   render(<Form/>)

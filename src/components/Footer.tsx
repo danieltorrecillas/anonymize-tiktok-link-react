@@ -1,4 +1,4 @@
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 const Footer = () => {
   const year = new Date().getFullYear()

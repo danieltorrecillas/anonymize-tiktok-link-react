@@ -1,7 +1,7 @@
 import {ChangeEventHandler, FormEventHandler, useState} from 'react'
 import Input from './Input'
 import Result from './Result'
-import {Constants} from './Constants'
+import {Constants} from '../Constants'
 
 const Form = () => {
   const [inputText, setInputText] = useState('')
