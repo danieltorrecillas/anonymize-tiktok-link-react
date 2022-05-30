@@ -8,7 +8,7 @@ const handlers = [
       return res(
         ctx.status(404),
         ctx.json({
-          errorMessage: 'Could not find a video for that link. Please double check and try again.',
+          errorMessage: 'Could not find a video for that link.\n\nPlease double check and try again.',
         })
       )
     }
