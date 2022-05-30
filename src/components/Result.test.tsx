@@ -23,7 +23,7 @@ test('clicking Copy button copies result into clipboard', () => {
   })
   const spy = jest.spyOn(navigator.clipboard, 'writeText')
 
-  render(<Result text={Constants.anonymizedUrl}/>)
+  render(<Result text={Constants.testAnonymizedUrl}/>)
   const copyButton = screen.getByRole('button', {name: 'Copy'})
   userEvent.click(copyButton)
   expect(spy).toHaveBeenCalled()

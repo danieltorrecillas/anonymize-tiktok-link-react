@@ -15,11 +15,14 @@ const Form = () => {
     event.preventDefault()
 
     const response = await fetch(`${Constants.apiUrl}${Constants.apiQueryString}${inputText}`)
-    if (!response.ok) {
-      throw new Error('Network response was not OK')
-    }
     const json = await response.json()
-    setResultText(json.url)
+
+    if (response.ok) {
+      setResultText(json.url)
+    } else {
+      alert(json.errorMessage)
+      setResultText('')
+    }
   }
 
   const handleReset: FormEventHandler<HTMLFormElement> = event => {

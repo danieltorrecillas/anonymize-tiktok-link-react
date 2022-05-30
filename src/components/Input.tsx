@@ -16,7 +16,7 @@ const Input = ({text, onChange}: InputProps) => {
         type="url"
         name="url"
         id="url"
-        placeholder={Constants.trackingUrl}
+        placeholder={Constants.testTrackingUrl}
         value={text}
         onChange={onChange}
         pattern="https://www.tiktok.com/.+"
