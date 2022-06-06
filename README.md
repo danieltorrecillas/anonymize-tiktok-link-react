@@ -158,12 +158,12 @@ $ cp deploy.sample deploy
 ```
 
 2. In `deploy`, edit
-  1. `prdS3Uri` to be the URI for your production S3 bucket
-  2. `devS3Uri` to be the URI for your development S3 bucket
-  3. `prdDistributionId` to be the ID for your production Cloudfront
-     distribution
-  4. `devDistributionId` to be the ID for your development Cloudfront
-     distribution
+   - `prdS3Uri` to be the URI for your production S3 bucket
+   - `devS3Uri` to be the URI for your development S3 bucket
+   - `prdDistributionId` to be the ID for your production Cloudfront
+   distribution
+   - `devDistributionId` to be the ID for your development Cloudfront
+   distribution
 
 #### Run Deployment Script
 
