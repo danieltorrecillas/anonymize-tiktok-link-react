@@ -5,5 +5,6 @@ export const Constants = {
   testAnonymizedUrl: 'https://www.tiktok.com/@thetalkingbook/video/7053083465318878511',
   testUrlWithNonExistentVideo: 'https://www.tiktok.com/garbage',
   author: 'Daniel Torrecillas',
+  authorLink: 'https://www.danieltorrecillas.com',
   repositoryLink: 'https://github.com/danieltorrecillas/anonymize-tiktok-link-react'
 } as const

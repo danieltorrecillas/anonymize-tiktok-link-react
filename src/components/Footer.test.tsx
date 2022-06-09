@@ -2,10 +2,9 @@ import {render, screen} from '@testing-library/react'
 import Footer from './Footer'
 import {Constants} from '../Constants'
 
-test('renders copyright with current year and author', () => {
-  const year = new Date().getFullYear()
+test('renders author link', () => {
   render(<Footer/>)
-  const element = screen.getByText(`© ${year} ${Constants.author}`)
+  const element = screen.getByRole('link', {name: Constants.author})
   expect(element).toBeInTheDocument()
 })
 

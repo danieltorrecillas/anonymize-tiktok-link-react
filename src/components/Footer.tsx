@@ -4,7 +4,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
   return (
     <p>
-      © {year} {Constants.author} <a href={Constants.repositoryLink}>About</a>
+        <a href={Constants.repositoryLink}>About</a> | © {year} <a href={Constants.authorLink}>{Constants.author}</a>
     </p>
   )
 }
