@@ -6,9 +6,8 @@ embedded with user tracking into one without tracking.
 
 The form submits user input to an endpoint that is responsible for the actual
 anonymization and returning that result to the React app. This endpoint is
-currently being fulfilled by an
-[AWS API Gateway](https://aws.amazon.com/api-gateway) endpoint which invokes my
-own
+fulfilled by an [AWS API Gateway](https://aws.amazon.com/api-gateway) endpoint
+which invokes my own
 [AWS Lambda function](https://aws.amazon.com/lambda) [*anonymize-tiktok-link-lambda*](https://github.com/danieltorrecillas/anonymize-tiktok-link-lambda).
 
 ## Form Input
@@ -80,10 +79,10 @@ A `start` at the root of the project runs the app in development mode:
 $ npm start
 ```
 
-Open http://localhost:3000 to view it in the browser.
+Open http://localhost:3000 to view the app in the browser.
 
-The page will automatically reload if you make changes to the code.
-You will see the build errors and lint warnings in the console.
+The page will automatically reload if you make changes to the code. You will see
+any build errors or lint warnings in the console.
 
 ## Project Building
 
@@ -121,8 +120,8 @@ upload `/build` to your favorite web server. Done.
 
 ### Optional Deployment Script to AWS
 
-There is a script to enable deployment of `/build` to an
-[AWS S3](https://aws.amazon.com/s3) bucket followed by creating an
+There is a script to enable deployment of the app to an [AWS S3](https://aws.amazon.com/s3)
+bucket followed by creating an
 [invalidation](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html)
 of an associated [AWS Cloudfront distribution](https://aws.amazon.cloudfrcom/cloudfront).
 
